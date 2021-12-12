@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>baiji-name-server</artifactId>
+    <artifactId>baiji-server-api</artifactId>
 
 
 </project>
