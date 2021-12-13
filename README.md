@@ -11,13 +11,13 @@
 - [ ] 支持多语言客户端
 
 ## 架构
-server：服务端，提供配置获取、更新、持久化相关功能
-client：客户端，在应用服务中运行，提供获取、更新本地线程池配置信息功能
-name-server：命名服务，对每个 client、server 执行注册、命名、发现服务
-console：查看控制台
+server：服务端，提供配置获取、更新、持久化相关功能  
+client：客户端，在应用服务中运行，提供获取、更新本地线程池配置信息功能  
+name-server：命名服务，对每个 client、server 执行注册、命名、发现服务  
+console：查看控制台  
 
 ## 持久化
-server 与 name-server 的配置信息、监控信息会持久化
-方案一：在本地文件，通过 nio 和 mmap 对文件进行读写
-方案二：持久化在 sqlite
+server 与 name-server 的配置信息、监控信息会持久化  
+方案一：在本地文件，通过 nio 和 mmap 对文件进行读写  
+方案二：持久化在 sqlite  
 
