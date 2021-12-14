@@ -1,7 +1,7 @@
 package com.gcy.baiji.client.report;
 
-import com.gcy.baiji.common.core.ThreadPoolSnapshot;
 import com.gcy.baiji.common.http.Result;
+import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import java.util.List;
 
 public class HttpSnapshotReporter implements SnapshotReporter<Result<String>> {

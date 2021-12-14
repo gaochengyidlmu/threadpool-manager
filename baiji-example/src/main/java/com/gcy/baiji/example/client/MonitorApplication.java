@@ -4,7 +4,7 @@ import com.gcy.baiji.client.holder.Holder;
 import com.gcy.baiji.client.holder.ThreadPoolMonitorHolder;
 import com.gcy.baiji.client.monitor.JDKThreadPoolMonitor;
 import com.gcy.baiji.client.monitor.ThreadPoolMonitor;
-import com.gcy.baiji.common.core.ThreadPoolSnapshot;
+import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;

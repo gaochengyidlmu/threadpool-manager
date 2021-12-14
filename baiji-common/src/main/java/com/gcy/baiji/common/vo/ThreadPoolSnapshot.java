@@ -1,4 +1,4 @@
-package com.gcy.baiji.common.core;
+package com.gcy.baiji.common.vo;
 
 import com.gcy.baiji.common.enums.ThreadPoolStateEnum;
 import java.util.Date;
@@ -15,6 +15,9 @@ public class ThreadPoolSnapshot {
   private ThreadPoolStateEnum runState;
   private int corePoolSize;
   private int maximumPoolSize;
+
+  public ThreadPoolSnapshot() {
+  }
 
   public ThreadPoolSnapshot(Builder builder) {
     this.threadPoolName = builder.threadPoolName;

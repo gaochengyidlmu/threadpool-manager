@@ -19,5 +19,5 @@ console：查看控制台
 ## 持久化
 server 与 name-server 的配置信息、监控信息会持久化  
 方案一：在本地文件，通过 nio 和 mmap 对文件进行读写  
-方案二：持久化在 sqlite  
+方案二：持久化在数据库  
 

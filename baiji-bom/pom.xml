@@ -12,10 +12,18 @@
         <spring.cloud.version>3.0.3</spring.cloud.version>
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
         <mysql.connect.version>8.0.26</mysql.connect.version>
+        <lombok.version>1.18.16</lombok.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -40,7 +48,7 @@
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>3.4.3.4</version>
+                <version>${mybatis.plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.gcy</groupId>
@@ -51,6 +59,13 @@
                 <groupId>com.gcy</groupId>
                 <artifactId>baiji-client</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <!--Assist tools-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

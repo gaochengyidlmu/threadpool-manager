@@ -1,7 +1,7 @@
 package com.gcy.baiji.client.monitor;
 
-import com.gcy.baiji.common.core.ThreadPoolSnapshot;
 import com.gcy.baiji.common.enums.ThreadPoolStateEnum;
+import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 
 /**
  * 线程池监控器

@@ -13,9 +13,7 @@
         <module>baiji-common</module>
         <module>baiji-client</module>
         <module>baiji-server</module>
-        <module>baiji-tool</module>
         <module>baiji-console</module>
-        <module>baiji-server-api</module>
     </modules>
 
     <properties>

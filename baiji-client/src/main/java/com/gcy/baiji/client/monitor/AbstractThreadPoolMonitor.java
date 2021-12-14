@@ -1,6 +1,6 @@
 package com.gcy.baiji.client.monitor;
 
-import com.gcy.baiji.common.core.ThreadPoolSnapshot;
+import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import java.util.Date;
 
 public abstract class AbstractThreadPoolMonitor implements ThreadPoolMonitor {
