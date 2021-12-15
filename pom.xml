@@ -35,4 +35,22 @@
         </dependencies>
     </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <scm>
+        <connection>scm:git:https://github.com/gaochengyidlmu/threadpool-manager.git</connection>
+        <url>https://github.com/gaochengyidlmu/threadpool-manager</url>
+        <developerConnection>scm:git:https://github.com/gaochengyidlmu/threadpool-manager.git
+        </developerConnection>
+    </scm>
 </project>
