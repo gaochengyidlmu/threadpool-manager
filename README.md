@@ -27,7 +27,7 @@ baiji-spring-boot-starter: 为 Spring Boot 提供的 starter 服务
 修改完成后，需要保证即时生效，相关方案有：
 1. 短轮询
 2. 长轮询
-3. WebSocket
+3. WebSocket  
 选择长轮询，简单、对服务端压力小，参考 RocketMQ 的长轮询方案。
 
 ### 服务发现与治理
