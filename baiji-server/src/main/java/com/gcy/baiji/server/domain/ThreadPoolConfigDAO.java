@@ -1,5 +1,7 @@
 package com.gcy.baiji.server.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.Data;
@@ -9,7 +11,8 @@ import lombok.Data;
 public class ThreadPoolConfigDAO {
 
   // 主键ID
-  private Long id;
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
   // 应用名称
   private String appName;
   // 线程池名称

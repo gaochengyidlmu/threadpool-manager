@@ -1,10 +1,17 @@
 package com.gcy.baiji.client.report;
 
+import com.gcy.baiji.common.client.ThreadPoolSnapshotClient;
 import com.gcy.baiji.common.http.Result;
 import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import java.util.List;
 
 public class HttpSnapshotReporter implements SnapshotReporter<Result<String>> {
+
+  private final ThreadPoolSnapshotClient client;
+
+  public HttpSnapshotReporter(ThreadPoolSnapshotClient client) {
+    this.client = client;
+  }
 
   public final Result<String> report(ThreadPoolSnapshot snapshot) {
     return doReport(snapshot);
@@ -15,7 +22,6 @@ public class HttpSnapshotReporter implements SnapshotReporter<Result<String>> {
   }
 
   public Result<String> request(List<ThreadPoolSnapshot> snapshots) {
-    // TODO: 实现通过 http 与 server 端的交互
-    return Result.success("success");
+    return client.bulkCreate(snapshots);
   }
 }

@@ -17,7 +17,7 @@ public abstract class AbstractThreadPoolMonitor implements ThreadPoolMonitor {
   }
 
   public ThreadPoolSnapshot snapshot() {
-    return new ThreadPoolSnapshot.Builder().activeThreadNum(getActiveThreadNum())
+    return ThreadPoolSnapshot.Builder().activeThreadNum(getActiveThreadNum())
         .corePoolSize(getCorePoolSize()).currentTaskCount(getCurrentTaskCount())
         .idleThreadNum(getIdleThreadNum()).largestPoolSize(getLargestPoolSize())
         .maximumPoolSize(getMaximumPoolSize()).runState(getRunState()).snapshotTime(new Date())

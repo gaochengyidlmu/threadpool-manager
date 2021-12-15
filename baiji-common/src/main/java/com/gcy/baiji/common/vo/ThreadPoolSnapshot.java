@@ -32,6 +32,10 @@ public class ThreadPoolSnapshot {
     this.maximumPoolSize = builder.maximumPoolSize;
   }
 
+  public static Builder Builder() {
+    return new Builder();
+  }
+
   public static final class Builder {
 
     String threadPoolName;

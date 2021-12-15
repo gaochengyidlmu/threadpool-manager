@@ -14,7 +14,7 @@ public class ThreadPoolSnapshotService {
 
   public void bulkCreate(List<ThreadPoolSnapshotDAO> list) {
     for (ThreadPoolSnapshotDAO dao : list) {
-      dao.setTpId(0l);
+      dao.setTpId(1);
       threadPoolSnapshotMapper.insert(dao);
     }
   }

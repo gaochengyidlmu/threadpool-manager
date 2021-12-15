@@ -5,12 +5,24 @@ import java.lang.reflect.Method;
 
 public class Reflections {
 
-  public static Method[] getMethods(Class<?> clazz) {
-    return clazz.getDeclaredMethods();
-  }
-
   public static Field[] getFields(Class<?> clazz) {
     return clazz.getDeclaredFields();
+  }
+
+  public static Field getField(Class<?> clazz, String fieldName) {
+    try {
+      return clazz.getDeclaredField(fieldName);
+    } catch (NoSuchFieldException e) {
+      if (clazz.getSuperclass() != null) {
+        return getField(clazz.getSuperclass(), fieldName);
+      }
+      return null;
+    }
+  }
+
+
+  public static Method[] getMethods(Class<?> clazz) {
+    return clazz.getDeclaredMethods();
   }
 
   public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes) {

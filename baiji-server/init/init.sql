@@ -7,7 +7,7 @@ USE `baiji_tp_manager`;
 DROP TABLE IF EXISTS `baiji_tp_config`;
 CREATE TABLE `baiji_tp_config`
 (
-    `id`              bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `id`              int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
     `app_name`        varchar(256) DEFAULT NULL COMMENT '应用名称',
     `tp_name`         varchar(56)  DEFAULT NULL COMMENT '线程池名称',
     `core_size`       int(11)      DEFAULT NULL COMMENT '核心线程数',
@@ -28,8 +28,8 @@ CREATE TABLE `baiji_tp_config`
 DROP TABLE IF EXISTS `baiji_tp_snapshot`;
 CREATE TABLE `baiji_tp_snapshot`
 (
-    `id`                 bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `tp_id`              bigint(20) unsigned NOT NULL COMMENT '线程池配置 id',
+    `id`                 int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `tp_id`              int(11) unsigned NOT NULL COMMENT '线程池配置 id',
     `ip`                 varchar(256) DEFAULT NULL COMMENT '线程池实例服务 ip',
     `port`               int(11)      DEFAULT NULL COMMENT '线程池实例服务 port',
     `active_thread_num`  int(11)      DEFAULT NULL COMMENT '活动线程数',

@@ -2,6 +2,7 @@ package com.gcy.baiji.client.holder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class DefaultHolder<K, V> implements Holder<K, V> {
 
@@ -13,5 +14,9 @@ public class DefaultHolder<K, V> implements Holder<K, V> {
 
   public V get(K key) {
     return monitorMap.get(key);
+  }
+
+  public Set<K> keySet() {
+    return monitorMap.keySet();
   }
 }

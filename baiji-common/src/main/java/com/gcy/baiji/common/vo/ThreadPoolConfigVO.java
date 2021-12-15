@@ -5,7 +5,7 @@ import java.util.Date;
 public class ThreadPoolConfigVO {
 
   // 主键ID
-  private Long id;
+  private Integer id;
   // 应用名称
   private String app_name;
   // 线程池名称

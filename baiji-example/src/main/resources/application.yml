@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: baiji-example
+  baiji:
+    thread-pool:
+      enabled: true
+      serverHost: http://localhost:8080
+server:
+  port: 8081
