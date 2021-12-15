@@ -5,7 +5,7 @@
     <groupId>com.gcy</groupId>
     <artifactId>threadpool-manager</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.2.RC</version>
+    <version>0.0.3-SNAPSHOT</version>
     <modules>
         <module>baiji-bom</module>
         <module>baiji-common</module>
@@ -53,6 +53,6 @@
         <url>https://github.com/gaochengyidlmu/threadpool-manager</url>
         <developerConnection>scm:git:https://github.com/gaochengyidlmu/threadpool-manager.git
         </developerConnection>
-        <tag>v0.0.2.RC</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
