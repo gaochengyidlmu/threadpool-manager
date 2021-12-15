@@ -14,7 +14,7 @@
 server：服务端，提供配置获取、更新、持久化相关功能  
 client：客户端，在应用服务中运行，提供获取、更新本地线程池配置信息功能  
 name-server：命名服务，对每个 client、server 执行注册、命名、发现服务  
-console：查看控制台  
+console：查看控制台 Vue  
 baiji-spring-boot-starter: 为 Spring Boot 提供的 starter 服务  
 
 ## 设计思路
