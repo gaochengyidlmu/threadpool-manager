@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcy.baiji.server.mapper.ThreadPoolConfigMapper">
+    <!-- 创建 -->
+    <insert id="insert" parameterType="ThreadPoolConfigEntity" useGeneratedKeys="true"
+        keyProperty="id">
+        INSERT INTO `baiji_tp_config` (`application_name`,
+                                       `thread_pool_name`,
+                                       `run_state`,
+                                       `core_pool_size`,
+                                       `maximum_pool_size`,
+                                       `queue_type`,
+                                       `queue_capacity`,
+                                       `rejected_type`,
+                                       `keep_alive_time`)
+        VALUES (#{applicationName},
+                #{threadPoolName},
+                #{runState},
+                #{corePoolSize},
+                #{maximumPoolSize},
+                #{queueType},
+                #{queueCapacity},
+                #{rejectedType},
+                #{keepAliveTime});
+    </insert>
+
+    <update id="update" parameterType="ThreadPoolConfigEntity" useGeneratedKeys="true"
+        keyProperty="id">
+        UPDATE `baiji_tp_config`
+        <set>
+            <if test="runState != null">`run_state` = #{runState},</if>
+            <if test="corePoolSize != null">`core_pool_size` = #{corePoolSize},</if>
+            <if test="maximumPoolSize != null">`maximum_pool_size` = #{maximumPoolSize},</if>
+            <if test="queueType != null">`queue_type` = #{queueType},</if>
+            <if test="queueCapacity != null">`queue_capacity` = #{queueCapacity},</if>
+            <if test="rejectedType != null">`rejected_type` = #{rejectedType},</if>
+            <if test="keepAliveTime != null">`keep_alive_time` = #{keepAliveTime},</if>
+        </set>
+        where id=#{id};
+    </update>
+</mapper>

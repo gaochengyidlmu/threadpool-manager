@@ -2,6 +2,7 @@ package com.gcy.baiji.starter.autoConfiguration;
 
 import com.gcy.baiji.client.holder.ThreadPoolMonitorHolder;
 import com.gcy.baiji.client.monitor.JDKThreadPoolMonitor;
+import com.gcy.baiji.client.report.CachedHttpSnapshotReporter;
 import com.gcy.baiji.client.report.HttpSnapshotReporter;
 import com.gcy.baiji.common.client.ThreadPoolSnapshotClient;
 import com.gcy.baiji.common.client.impl.ThreadPoolSnapshotClientImpl;
@@ -11,28 +12,41 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 
 @EnableConfigurationProperties(BaijiProperties.class)
 @ConditionalOnProperty(name = "spring.baiji.thread-pool.enabled", havingValue = "true")
 public class ThreadPoolManagerConfiguration {
 
+  @Value("${spring.application.name}")
+  private String applicationName;
+
   @Autowired
   private BaijiProperties baijiProperties;
+  @Autowired
+  private Environment env;
 
   @Bean
   @ConditionalOnMissingBean(ThreadPoolSnapshotClient.class)
   ThreadPoolSnapshotClient buildThreadPoolSnapshotClient() {
-    return new ThreadPoolSnapshotClientImpl(baijiProperties.getServerHost());
+    String port;
+    if ((port = env.getProperty("server.port")) == null
+        && (port = env.getProperty("local.server.port")) == null) {
+      port = "8080";
+    }
+
+    return new ThreadPoolSnapshotClientImpl(baijiProperties.getServerHost(), port);
   }
 
   @Bean
   @ConditionalOnMissingBean(HttpSnapshotReporter.class)
   HttpSnapshotReporter buildHttpSnapshotReporter(ThreadPoolSnapshotClient client) {
-    return new HttpSnapshotReporter(client);
+    return new CachedHttpSnapshotReporter(applicationName, client);
   }
 
   @Bean

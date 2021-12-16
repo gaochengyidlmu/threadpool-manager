@@ -1,7 +1,7 @@
 package com.gcy.baiji.client.monitor;
 
 import com.gcy.baiji.common.enums.ThreadPoolStateEnum;
-import com.gcy.baiji.common.tool.Reflections;
+import com.gcy.baiji.common.tool.ReflectionFields;
 import java.lang.reflect.Field;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -43,7 +43,7 @@ public class JDKThreadPoolMonitor extends AbstractThreadPoolMonitor {
   public ThreadPoolStateEnum getRunState() {
     int state = 0;
     try {
-      Field ctlField = Reflections.getField(executor.getClass(), "ctl");
+      Field ctlField = ReflectionFields.getFieldIncludeParent(executor.getClass(), "ctl");
       ctlField.setAccessible(true);
       state = runStateOf(((AtomicInteger) ctlField.get(executor)).get());
     } catch (Exception e) {

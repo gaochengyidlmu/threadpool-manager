@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcy.baiji.server.mapper.ThreadPoolSnapshotMapper">
+    <!-- 创建 -->
+    <insert id="insert" parameterType="ThreadPoolSnapshotEntity" useGeneratedKeys="true"
+        keyProperty="id">
+        INSERT INTO `baiji_tp_snapshot` (`tp_config_id`,
+                                         `ip`,
+                                         `port`,
+                                         `run_state`,
+                                         `active_thread_num`,
+                                         `idle_thread_num`,
+                                         `current_task_count`,
+                                         `total_task_count`,
+                                         `snapshot_time`)
+        VALUES (#{tpConfigId},
+                #{ip},
+                #{port},
+                #{runState},
+                #{activeThreadNum},
+                #{idleThreadNum},
+                #{currentTaskCount},
+                #{totalTaskCount},
+                #{snapshotTime})
+    </insert>
+</mapper>

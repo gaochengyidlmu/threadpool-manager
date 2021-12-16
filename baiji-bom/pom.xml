@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.gcy</groupId>
     <artifactId>baiji-bom</artifactId>
     <version>0.0.3-SNAPSHOT</version>
@@ -8,7 +10,7 @@
     <properties>
         <spring.boot.version>2.3.8.RELEASE</spring.boot.version>
         <spring.cloud.version>3.0.3</spring.cloud.version>
-        <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
+        <mybatis.version>2.2.0</mybatis.version>
         <mysql.connect.version>8.0.26</mysql.connect.version>
         <lombok.version>1.18.16</lombok.version>
         <okhttp.version>4.9.3</okhttp.version>
@@ -46,9 +48,9 @@
                 <version>${mysql.connect.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis.plus.version}</version>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.gcy</groupId>

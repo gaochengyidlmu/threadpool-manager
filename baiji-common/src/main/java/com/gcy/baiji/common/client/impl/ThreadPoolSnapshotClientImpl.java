@@ -1,5 +1,10 @@
 package com.gcy.baiji.common.client.impl;
 
+import static com.gcy.baiji.common.http.HttpResource.API;
+import static com.gcy.baiji.common.http.HttpResource.PORT_HEADER;
+import static com.gcy.baiji.common.http.HttpResource.THREAD_POOL_SNAPSHOTS;
+import static com.gcy.baiji.common.http.HttpResource.V1;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gcy.baiji.common.client.ThreadPoolSnapshotClient;
@@ -18,23 +23,27 @@ import okhttp3.Response;
 public class ThreadPoolSnapshotClientImpl implements ThreadPoolSnapshotClient {
 
   private final String serverHost;
+  private final String clientPort;
   private final ObjectMapper objectMapper = ObjectMapperFactory.createObjectMapper();
   public static final MediaType JSON
       = MediaType.get("application/json; charset=utf-8");
 
-  public ThreadPoolSnapshotClientImpl(String serverHost) {
+  public ThreadPoolSnapshotClientImpl(String serverHost, String clientPort) {
     this.serverHost = serverHost;
+    this.clientPort = clientPort;
   }
 
   @Override
-  public Result<String> bulkCreate(List<ThreadPoolSnapshot> list) {
+  public Result<String> bulkCreate(String applicationName, List<ThreadPoolSnapshot> list) {
     OkHttpClient client = OkHttpClientFactory.getInstance();
 
     Request request = null;
     try {
       request = new Request.Builder()
-          .url(serverHost + "/api/v1/thread_pool_snapshots")
+          .url(
+              serverHost + API + V1 + THREAD_POOL_SNAPSHOTS + "?applicationName=" + applicationName)
           .post(RequestBody.create(JSON, objectMapper.writeValueAsString(list)))
+          .addHeader(PORT_HEADER, clientPort)
           .build();
     } catch (JsonProcessingException e) {
       e.printStackTrace();

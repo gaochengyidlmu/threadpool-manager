@@ -7,9 +7,11 @@ import java.util.List;
 
 public class HttpSnapshotReporter implements SnapshotReporter<Result<String>> {
 
+  private final String applicationName;
   private final ThreadPoolSnapshotClient client;
 
-  public HttpSnapshotReporter(ThreadPoolSnapshotClient client) {
+  public HttpSnapshotReporter(String applicationName, ThreadPoolSnapshotClient client) {
+    this.applicationName = applicationName;
     this.client = client;
   }
 
@@ -22,6 +24,6 @@ public class HttpSnapshotReporter implements SnapshotReporter<Result<String>> {
   }
 
   public Result<String> request(List<ThreadPoolSnapshot> snapshots) {
-    return client.bulkCreate(snapshots);
+    return client.bulkCreate(applicationName, snapshots);
   }
 }

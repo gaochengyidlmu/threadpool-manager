@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ThreadPoolSnapshotClient {
 
-  Result<String> bulkCreate(List<ThreadPoolSnapshot> list);
+  Result<String> bulkCreate(String applicationName, List<ThreadPoolSnapshot> list);
 }

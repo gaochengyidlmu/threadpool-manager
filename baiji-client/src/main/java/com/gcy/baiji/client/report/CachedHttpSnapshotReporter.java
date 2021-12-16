@@ -8,11 +8,11 @@ import java.util.List;
 
 public class CachedHttpSnapshotReporter extends HttpSnapshotReporter {
 
-  private final static int flushCapacity = 12;
+  private final static int flushCapacity = 10;
   private final List<ThreadPoolSnapshot> list = new ArrayList<>(16);
 
-  public CachedHttpSnapshotReporter(ThreadPoolSnapshotClient client) {
-    super(client);
+  public CachedHttpSnapshotReporter(String applicationName, ThreadPoolSnapshotClient client) {
+    super(applicationName, client);
   }
 
   @Override

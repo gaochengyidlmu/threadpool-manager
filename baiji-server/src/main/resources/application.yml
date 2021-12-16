@@ -6,3 +6,10 @@ spring:
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/baiji_tp_manager
+
+mybatis:
+  type-aliases-package: com.gcy.baiji.server.entity
+  configuration:
+    # 开启驼峰命名转换
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mappers/**/*.xml

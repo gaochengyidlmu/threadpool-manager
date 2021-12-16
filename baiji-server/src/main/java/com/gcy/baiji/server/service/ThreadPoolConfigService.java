@@ -1,8 +1,10 @@
 package com.gcy.baiji.server.service;
 
-import org.springframework.stereotype.Service;
+import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
+import com.gcy.baiji.server.entity.ThreadPoolConfigEntity;
 
-@Service
-public class ThreadPoolConfigService {
+public interface ThreadPoolConfigService {
 
+  ThreadPoolConfigEntity save(String applicationName,
+      ThreadPoolSnapshot threadPoolSnapshot);
 }
