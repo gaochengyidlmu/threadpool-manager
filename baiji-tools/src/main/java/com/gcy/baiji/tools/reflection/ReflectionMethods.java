@@ -1,5 +1,6 @@
-package com.gcy.baiji.common.tool;
+package com.gcy.baiji.tools.reflection;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ReflectionMethods {
@@ -12,6 +13,18 @@ public class ReflectionMethods {
   public static Method getMethod(Class<?> clazz, String methodName,
       Class<?>... parameterTypes) {
     return getMethod(false, clazz, methodName, parameterTypes);
+  }
+
+  // 根据字段，获取 getter 方法
+  public static Method getGetter(Class<?> clazz, Field field) {
+    return ReflectionMethods
+        .getMethod(clazz, ReflectionMethods.buildGetMethodName(field.getName()));
+  }
+
+  // 根据字段，获取 setter 方法
+  public static Method setGetter(Class<?> clazz, Field field) {
+    return ReflectionMethods
+        .findMethodByName(clazz, ReflectionMethods.buildSetMethodName(field.getName()));
   }
 
   // 查找指定方法，包含父类的方法

@@ -1,4 +1,4 @@
-package com.gcy.baiji.common.tool;
+package com.gcy.baiji.common.utils;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

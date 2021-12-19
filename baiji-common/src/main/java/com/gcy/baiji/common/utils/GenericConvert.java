@@ -1,4 +1,6 @@
-package com.gcy.baiji.common.tool;
+package com.gcy.baiji.common.utils;
+
+import com.gcy.baiji.tools.reflection.ReflectionConstructors;
 
 public class GenericConvert {
 

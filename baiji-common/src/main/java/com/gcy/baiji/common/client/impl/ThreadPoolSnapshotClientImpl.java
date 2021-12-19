@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gcy.baiji.common.client.ThreadPoolSnapshotClient;
 import com.gcy.baiji.common.http.OkHttpClientFactory;
 import com.gcy.baiji.common.http.Result;
-import com.gcy.baiji.common.tool.ObjectMapperFactory;
+import com.gcy.baiji.common.utils.ObjectMapperFactory;
 import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import java.io.IOException;
 import java.util.List;

@@ -6,7 +6,7 @@ import static com.gcy.baiji.common.http.HttpResource.THREAD_POOL_SNAPSHOTS;
 import static com.gcy.baiji.common.http.HttpResource.V1;
 
 import com.gcy.baiji.common.http.Result;
-import com.gcy.baiji.common.tool.GenericConvert;
+import com.gcy.baiji.common.utils.GenericConvert;
 import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import com.gcy.baiji.server.entity.ThreadPoolConfigEntity;
 import com.gcy.baiji.server.entity.ThreadPoolSnapshotEntity;

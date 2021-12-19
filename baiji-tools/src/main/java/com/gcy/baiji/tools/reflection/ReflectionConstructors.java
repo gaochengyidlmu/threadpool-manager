@@ -1,4 +1,4 @@
-package com.gcy.baiji.common.tool;
+package com.gcy.baiji.tools.reflection;
 
 import java.lang.reflect.Constructor;
 
