@@ -22,8 +22,9 @@ public class ThreadPoolConfigServiceImpl implements ThreadPoolConfigService {
   // 保存或更新
   public ThreadPoolConfigEntity save(String applicationName,
       ThreadPoolSnapshot threadPoolSnapshot) {
-    ThreadPoolConfigEntity threadPoolConfigEntity = selectOneByApplicationNameAndThreadPoolName(
-        applicationName, threadPoolSnapshot.getThreadPoolName());
+    ThreadPoolConfigEntity threadPoolConfigEntity = mapper
+        .selectOneByApplicationNameAndThreadPoolName(
+            applicationName, threadPoolSnapshot.getThreadPoolName());
     if (threadPoolConfigEntity == null) {
       threadPoolConfigEntity = ThreadPoolConfigEntity.builder().applicationName(applicationName)
           .build();
@@ -39,19 +40,6 @@ public class ThreadPoolConfigServiceImpl implements ThreadPoolConfigService {
       }
     }
 
-    return threadPoolConfigEntity;
-  }
-
-  public ThreadPoolConfigEntity selectOneByApplicationNameAndThreadPoolName(String applicationName,
-      String poolName) {
-    String cacheKey = applicationName + "-" + poolName;
-    ThreadPoolConfigEntity threadPoolConfigEntity = cache.get(cacheKey);
-    if (threadPoolConfigEntity != null) {
-      return threadPoolConfigEntity;
-    }
-    threadPoolConfigEntity = mapper
-        .selectOneByApplicationNameAndThreadPoolName(applicationName, poolName);
-    cache.put(cacheKey, threadPoolConfigEntity);
     return threadPoolConfigEntity;
   }
 }

@@ -3,8 +3,8 @@ package com.gcy.baiji.tools.cache;
 import java.util.LinkedList;
 
 /**
- * LRU 在 java 中可以通过 LinkedHashMap 实现，不过这里就直接采用最暴力的方式，额外记录一个 link list，
- * 将使用的节点刷新到头部。当 store 中的元素个数超过了 maxSize 时，剔除掉 list 中最后的节点。
+ * LRU 在 java 中可以通过 LinkedHashMap 实现，不过这里就直接采用最暴力的方式自行实现一个，本方式存在性能问题，仅学习使用
+ * 额外记录一个 link list，将使用的节点刷新到头部。当 store 中的元素个数超过了 maxSize 时，剔除掉 list 中最后的节点。
  *
  * @param <K>
  * @param <V>
