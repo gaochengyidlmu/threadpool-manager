@@ -65,6 +65,23 @@ server 与 name-server 的配置信息、监控信息会持久化，目前通过
 3. 比例
 4. 公平
 
+### 缓存
+自定义缓存注解 Cached EvictCache，通过 CacheAspect 织入缓存读、写、无效的操作，保证对业务无侵入性，并实现 SpEL 解析。
+```java
+public interface ThreadPoolConfigMapper {
+  @Cached(namespace = "#applicationName", key = "#threadPoolName")
+  @Select("SELECT * FROM baiji_tp_config WHERE application_name = #{applicationName} AND thread_pool_name = #{threadPoolName} LIMIT 0, 1")
+  ThreadPoolConfigEntity selectOneByApplicationNameAndThreadPoolName(
+      @Param("applicationName") String applicationName,
+      @Param("threadPoolName") String threadPoolName);
+
+  void insert(ThreadPoolConfigEntity entity);
+
+  @EvictCache(namespace = "#entity.applicationName", key = "#entity.threadPoolName")
+  void update(ThreadPoolConfigEntity entity);
+}
+```
+
 ## 设计模式
 ### 单例模式
 

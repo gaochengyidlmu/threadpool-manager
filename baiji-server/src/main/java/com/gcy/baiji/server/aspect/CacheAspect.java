@@ -3,13 +3,14 @@ package com.gcy.baiji.server.aspect;
 
 import com.gcy.baiji.tools.cache.LruCache;
 import com.gcy.baiji.tools.cache.LruEvictableCache;
-import java.util.ArrayList;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
@@ -19,20 +20,29 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Slf4j
 public class CacheAspect {
 
   private final LruCache<String, Object> cache = new LruEvictableCache<>(1 << 10,
       1 << 6);
 
-  StandardReflectionParameterNameDiscoverer parameterNameDiscoverer = new StandardReflectionParameterNameDiscoverer();
+  @Autowired
+  private ParameterNameDiscoverer parameterNameDiscoverer;
+
+  /**
+   * 定义 Cached 注解修饰的切点
+   */
+  @Pointcut("@annotation(com.gcy.baiji.server.aspect.Cached)")
+  private void selectedCached() {
+  }
 
   /**
    * Following is the definition for a pointcut to select
    * all the methods available. So advice will be called
    * for all the methods.
    */
-  @Pointcut("@annotation(com.gcy.baiji.server.aspect.Cached)")
-  private void selectedCached() {
+  @Pointcut("@annotation(com.gcy.baiji.server.aspect.EvictCache)")
+  private void selectedEvictCache() {
   }
 
   /**
@@ -40,47 +50,62 @@ public class CacheAspect {
    * around a selected method execution.
    */
   @Around("selectedCached()")
-  public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-    System.out.println("Around advice");
-    Object[] params = proceedingJoinPoint.getArgs();
-
+  public Object aroundCached(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
     Cached annotation = AnnotationUtils.findAnnotation(signature.getMethod(), Cached.class);
-    long ttl = annotation.ttl();
-    long deadline = System.currentTimeMillis() + ttl;
+    String cacheKey = buildCacheKey(signature.getParameterNames(), proceedingJoinPoint.getArgs(),
+        annotation.namespace(), annotation.key());
 
-    // 创建一个虚拟的容器EvaluationContext
-    StandardEvaluationContext ctx = new StandardEvaluationContext();
-    ctx.setRootObject(new ArrayList<>());
-//    ctx.setVariable("params", params);
-
-    signature.getParameterNames();
-    String[] paramNames = parameterNameDiscoverer.getParameterNames(signature.getMethod());
-    for (int i = 0; i < params.length; i++) {
-      ctx.setVariable(paramNames[i], params[i]);
+    Object entity = cache.get(cacheKey);
+    if (entity != null) {
+      log.info("Cache hit {}", entity);
+      return entity;
     }
 
+    Object result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+
+    long ttl = annotation.ttl();
+    long deadline = System.currentTimeMillis() + ttl;
+    cache.put(cacheKey, result, deadline);
+
+    log.info("Cache missed, put cache {}", result);
+    return result;
+  }
+
+  /**
+   * 数据更新时，将对应的缓存进行无效
+   */
+  @Around("selectedEvictCache()")
+  public Object aroundEvictCache(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    Object result = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+
+    MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
+    EvictCache annotation = AnnotationUtils.findAnnotation(signature.getMethod(), EvictCache.class);
+    String cacheKey = buildCacheKey(signature.getParameterNames(), proceedingJoinPoint.getArgs(),
+        annotation.namespace(), annotation.key());
+    cache.remove(cacheKey);
+    log.info("remove cache {}", cacheKey);
+    return result;
+  }
+
+  private String buildCacheKey(String[] parameterNames, Object[] params, String namespaceAnno,
+      String keyAnno) {
+    // 创建一个虚拟的容器EvaluationContext
+    StandardEvaluationContext ctx = new StandardEvaluationContext();
+    // 将参数名字写入，此处需要 javac 中添加 -parameters 参数，该参数会让 class 文件中保存参数实际名称
     for (int i = 0; i < params.length; i++) {
-      ctx.setVariable(String.valueOf(i), params[i]);
+      ctx.setVariable(parameterNames[i], params[i]);
     }
 
     // 创建ExpressionParser解析表达式
     ExpressionParser parser = new SpelExpressionParser();
     // 表达式放置
-    Expression namespaceExp = parser.parseExpression(annotation.namespace());
-    Expression keyExp = parser.parseExpression(annotation.key());
+    Expression namespaceExp = parser.parseExpression(namespaceAnno);
+    Expression keyExp = parser.parseExpression(keyAnno);
 
     String namespace = (String) namespaceExp.getValue(ctx);
     String key = (String) keyExp.getValue(ctx);
 
-    String cacheKey = namespace + "-" + key;
-    Object entity = cache.get(cacheKey);
-    if (entity != null) {
-      return entity;
-    }
-
-    Object result = proceedingJoinPoint.proceed(params);
-    cache.put(cacheKey, result, deadline);
-    return result;
+    return namespace + "-" + key;
   }
 }

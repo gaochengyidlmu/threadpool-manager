@@ -26,8 +26,7 @@
                 #{keepAliveTime});
     </insert>
 
-    <update id="update" parameterType="ThreadPoolConfigEntity" useGeneratedKeys="true"
-        keyProperty="id">
+    <update id="update" parameterType="ThreadPoolConfigEntity">
         UPDATE `baiji_tp_config`
         <set>
             <if test="runState != null">`run_state` = #{runState},</if>

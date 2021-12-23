@@ -62,7 +62,7 @@ public class ThreadPoolManagerConfiguration {
 
     // 创建大小为5的线程池
     ScheduledExecutorService scheduledThreadPool = Executors
-        .newScheduledThreadPool(5, new DefaultThreadFactory("baiji-thread-pool-manager"));
+        .newScheduledThreadPool(8, new DefaultThreadFactory("baiji-thread-pool-manager"));
 
     JDKThreadPoolMonitor baijiScheduleThreadPool = new JDKThreadPoolMonitor(
         "baijiScheduleThreadPool", (ThreadPoolExecutor) scheduledThreadPool);
@@ -72,7 +72,10 @@ public class ThreadPoolManagerConfiguration {
     // 周期性执行，每5秒执行一次
     scheduledThreadPool.scheduleAtFixedRate(() -> {
           threadPoolMonitorHolder.keySet()
-              .forEach(key -> reporter.report(threadPoolMonitorHolder.get(key).snapshot()));
+              .forEach(key -> {
+                reporter.report(threadPoolMonitorHolder.get(key).snapshot());
+                System.out.println("report is over");
+              });
         }, 0, 5,
         TimeUnit.SECONDS);
     return scheduledThreadPool;

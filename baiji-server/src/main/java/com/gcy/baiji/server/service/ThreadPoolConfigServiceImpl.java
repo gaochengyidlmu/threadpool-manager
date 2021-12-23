@@ -4,19 +4,16 @@ import com.gcy.baiji.common.utils.ObjectUtils;
 import com.gcy.baiji.common.vo.ThreadPoolSnapshot;
 import com.gcy.baiji.server.entity.ThreadPoolConfigEntity;
 import com.gcy.baiji.server.mapper.ThreadPoolConfigMapper;
-import com.gcy.baiji.tools.cache.LruCache;
-import com.gcy.baiji.tools.cache.LruEvictableCache;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class ThreadPoolConfigServiceImpl implements ThreadPoolConfigService {
 
   @Autowired
   private ThreadPoolConfigMapper mapper;
-
-  private final LruCache<String, ThreadPoolConfigEntity> cache = new LruEvictableCache<>(1 << 10,
-      1 << 6);
 
   @Override
   // 保存或更新
@@ -28,15 +25,14 @@ public class ThreadPoolConfigServiceImpl implements ThreadPoolConfigService {
     if (threadPoolConfigEntity == null) {
       threadPoolConfigEntity = ThreadPoolConfigEntity.builder().applicationName(applicationName)
           .build();
-      ObjectUtils.merge(threadPoolSnapshot, threadPoolConfigEntity);
-      mapper.insert(threadPoolConfigEntity);
+      ThreadPoolConfigEntity result = ObjectUtils.merge(threadPoolSnapshot, threadPoolConfigEntity);
+      mapper.insert(result);
     } else {
       ThreadPoolConfigEntity result = ObjectUtils.merge(threadPoolSnapshot, threadPoolConfigEntity);
       if (!ObjectUtils.daoCompareTo(result, threadPoolConfigEntity)) {
-        mapper.update(threadPoolConfigEntity);
+        mapper.update(result);
       } else {
-        System.out
-            .println("id(" + threadPoolConfigEntity.getId() + ") is same, do not need to update");
+        log.info("id({}) is same, do not need to update", threadPoolConfigEntity.getId());
       }
     }
 

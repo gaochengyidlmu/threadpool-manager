@@ -15,7 +15,7 @@ public class ExampleConfiguration {
 
   @Bean("commonThreadPoolExecutor")
   ThreadPoolExecutor buildThreadPoolExecutor() {
-    return new ThreadPoolExecutor(10, 50, 120, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+    return new ThreadPoolExecutor(12, 50, 120, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
   }
 
   @Bean
